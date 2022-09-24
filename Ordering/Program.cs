@@ -16,7 +16,7 @@ namespace Ordering
             List<Pica> ListOfDrinks;
             Table stol;
             DbConnection connection = new DbConnection();
-
+            
 
             while (true)
             {
@@ -116,6 +116,8 @@ namespace Ordering
 
             }
             Console.WriteLine(stol.tableCost);
+
+            
         }
         //Prikaz pica
         public static void ShowAllDrinks(List<Pica> ListOfDrinks)

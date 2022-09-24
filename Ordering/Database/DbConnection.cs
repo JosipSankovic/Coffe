@@ -15,6 +15,11 @@ namespace Ordering.Database
         public int Kolicina;
         public int Cijena;
     }
+    public struct Racun
+    {
+        public int Id_Racuna;
+        public int Cijena;
+    }
     
     public class DbConnection
     {
@@ -89,6 +94,39 @@ namespace Ordering.Database
 
             sqlCommand.Dispose();
             cnn.Close();
+        }
+        
+        public List<Racun> GetRacuni()
+        {
+            cnn = new SqlConnection(connectionString);
+            string sql = $"SELECT * FROM Racun_Cijena";
+
+            List<Racun> Racuni = new List<Racun>();
+
+            try
+            {
+                cnn.Open();
+                sqlCommand = new SqlCommand(sql, cnn);
+                dataReader = sqlCommand.ExecuteReader();
+                sqlCommand.Dispose();
+
+                while (dataReader.Read())
+                {
+                    Racun rac;
+                    rac.Id_Racuna = (int)dataReader.GetValue(0);
+                    rac.Cijena =(int) dataReader.GetValue(1);
+
+                }
+                cnn.Close();
+                return Racuni;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            cnn.Close();
+            return null;
         }
     }
 }
