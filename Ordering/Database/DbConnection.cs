@@ -48,20 +48,47 @@ namespace Ordering.Database
                     allDrinks.Add(drink);
 
                 }
+                cnn.Close();
                 return allDrinks;
             }
             catch(Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
-            
 
+            cnn.Close();
             return null;
         }
         
         public void SpremiRacun(Table stol)
         {
+            string sql1 = $"INSERT INTO Racun_Cijena(Cijena) VALUES ({stol.tableCost})";
+            string getId = $"SELECT MAX(Id_Racun) FROM Racun_Cijena";
+            int Id_Racun = 0;
+            string sql2="";
+            int item_count=stol.billItems.Count();
+
+           
+
+            cnn.Open();
+            sqlCommand = new SqlCommand(sql1, cnn);
+            sqlCommand.ExecuteNonQuery();
+      
+            sqlCommand.CommandText = getId;
+            dataReader=sqlCommand.ExecuteReader();
+            while(dataReader.Read())
+            Id_Racun =(int) dataReader.GetValue(0);
+            dataReader.Close();
+            foreach (var x in stol.billItems)
+            {
+                sql2 += $" INSERT INTO Racun_Pica(Id_Racun,Kolicina,Id_Pica) VALUES({Id_Racun},{x.Kolicina},{x.Id_Pica}) ";
+            }
             
+            sqlCommand.CommandText = sql2;
+            sqlCommand.ExecuteNonQuery();
+
+            sqlCommand.Dispose();
+            cnn.Close();
         }
     }
 }

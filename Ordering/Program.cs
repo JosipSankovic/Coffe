@@ -73,7 +73,7 @@ namespace Ordering
                         IndexPica = 0;
                         if (odabir == "Y")
                         {
-                            SpremiUBazu(table);
+                            SpremiUBazu(connection, table);
                             break;
                         }
                     }
@@ -100,9 +100,11 @@ namespace Ordering
             }
         }
 
-        public static void SpremiUBazu(Table stol)
+        public static void SpremiUBazu(DbConnection cnn,Table stol)
         {
             Console.WriteLine("Spremi");
+            cnn.SpremiRacun(stol);
+            
         }
 
         //Prikaz racuna
