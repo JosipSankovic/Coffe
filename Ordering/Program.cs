@@ -73,7 +73,8 @@ namespace Ordering
                         IndexPica = 0;
                         if (odabir == "Y")
                         {
-                            SpremiUBazu(connection, table);
+                            SpremiUBazu(connection,ref table);
+                            stolovi[TableIndex] = table;
                             break;
                         }
                     }
@@ -100,10 +101,13 @@ namespace Ordering
             }
         }
 
-        public static void SpremiUBazu(DbConnection cnn,Table stol)
+        public static void SpremiUBazu(DbConnection cnn,ref Table stol)
         {
             Console.WriteLine("Spremi");
             cnn.SpremiRacun(stol);
+            stol.billItems.Clear();
+            stol.tableCost = 0;
+            
             
         }
 

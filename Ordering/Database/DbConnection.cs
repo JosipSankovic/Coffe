@@ -84,14 +84,16 @@ namespace Ordering.Database
             while(dataReader.Read())
             Id_Racun =(int) dataReader.GetValue(0);
             dataReader.Close();
-            foreach (var x in stol.billItems)
-            {
-                sql2 += $" INSERT INTO Racun_Pica(Id_Racun,Kolicina,Id_Pica) VALUES({Id_Racun},{x.Kolicina},{x.Id_Pica}) ";
-            }
-            
-            sqlCommand.CommandText = sql2;
-            sqlCommand.ExecuteNonQuery();
 
+            if (stol.billItems.Count != 0) {
+                foreach (var x in stol.billItems)
+                {
+                    sql2 += $" INSERT INTO Racun_Pica(Id_Racun,Kolicina,Id_Pica) VALUES({Id_Racun},{x.Kolicina},{x.Id_Pica}) ";
+                }
+            
+                sqlCommand.CommandText = sql2;
+                sqlCommand.ExecuteNonQuery();
+            }
             sqlCommand.Dispose();
             cnn.Close();
         }
